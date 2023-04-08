@@ -52,12 +52,13 @@ progress.
 - Install Node.js and use Express.js to build a simple single endpoint web application that
   returns the following JSON object. The blank space should be your name, and the
   timestamp should be dynamically generated.
-  ```json
-  {
-    “message”: “My name is \_\_\_”,
-    “timestamp”: 12312344
-  }
-  ```
+
+```json
+{
+  "message": "My name is ___",
+  "timestamp": 12312344
+}
+```
 
 ### Docker Containerization
 
