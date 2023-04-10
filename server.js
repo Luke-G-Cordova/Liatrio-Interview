@@ -19,6 +19,6 @@ endpoints.forEach((endpoint) => {
   }
 });
 
-app.listen(process.env.SERVER_PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.SERVER_PORT}`);
 });
