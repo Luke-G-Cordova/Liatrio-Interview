@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import { default as endpoints } from './api/endpoints/index.js';
 
@@ -6,6 +8,7 @@ const app = express();
 endpoints.forEach((endpoint) => {
   switch (endpoint.method) {
     case 'GET':
+      console.log('Received a GET request');
       app.get(`${endpoint.rout}`, endpoint.fn);
       break;
     // handle other methods such as POST, PUT, DELETE
@@ -16,6 +19,6 @@ endpoints.forEach((endpoint) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Listening on port 3000');
+app.listen(process.env.SERVER_PORT, () => {
+  console.log(`Listening on port ${process.env.SERVER_PORT}`);
 });
