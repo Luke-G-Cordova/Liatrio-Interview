@@ -14,9 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: Login to docker
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview:github-action && docker run -p 80:80 -d lukegallianocordova/liatrio-interview:github-action
+      run: docker build . --file Dockerfile --tag $DOCKER_USER/liatrio-interview:$(date +%s) && docker run -p 80:80 -d $DOCKER_USER/liatrio-interview:$(date +%s)
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
     - name: Push to Docker
-      run: docker push lukegallianocordova/liatrio-interview:github-action
+      run: docker push $DOCKER_USER/liatrio-interview:$(date +%s)
