@@ -4,7 +4,7 @@ export default [
   {
     name: 'NameMessage',
     description: 'Returns my name',
-    rout: '/name-message',
+    rout: '/',
     method: 'GET',
     fn: NameMessage,
   },
