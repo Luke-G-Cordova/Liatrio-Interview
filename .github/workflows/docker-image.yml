@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview:github-action && docker run -p 80:3000 -d lukegallianocordova/liatrio-interview:github-action
+      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview:github-action && docker run -p 80:80 -d lukegallianocordova/liatrio-interview:github-action
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
     - name: Push to Docker
