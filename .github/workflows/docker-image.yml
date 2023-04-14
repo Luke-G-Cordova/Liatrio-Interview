@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview && docker run -p 80:3000 -d lukegallianocordova/liatrio-interview
+    - name: run tests
+      uses: liatrio/github-actions/apprentice-action@master
+    - name: Push to Docker
+      run: docker push lukegallianocordova/liatrio-interview
