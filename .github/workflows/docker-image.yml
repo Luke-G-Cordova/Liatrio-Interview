@@ -22,7 +22,7 @@ jobs:
       run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview
     - name: Run the Docker image
       run: docker run -p 80:80 -d lukegallianocordova/liatrio-interview
-    - name: run tests
+    - name: Test the Docker Image
       uses: liatrio/github-actions/apprentice-action@master
-    - name: Push to Docker
+    - name: Push to Docker Hub
       run: docker push lukegallianocordova/liatrio-interview
