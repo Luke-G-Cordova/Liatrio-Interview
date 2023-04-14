@@ -25,4 +25,4 @@ jobs:
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
     - name: Push to Docker
-      run: docker push ${{secrets.DOCKER_USER}}/liatrio-interview
+      run: docker push lukegallianocordova/liatrio-interview
