@@ -10,6 +10,6 @@ RUN npm install
 COPY . .
 
 # should figure out how to make this refer to an env var
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["node", "server.js"]
