@@ -19,9 +19,9 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: docker login -u "lukegallianocordova" -p "${DOCKER_PASSWORD}"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview:$(date +%s) 
+      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview
     - name: Run the Docker image
-      run: docker run -p 80:80 -d lukegallianocordova/liatrio-interview:$(date +%s)
+      run: docker run -p 80:80 -d lukegallianocordova/liatrio-interview
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
     - name: Push to Docker
