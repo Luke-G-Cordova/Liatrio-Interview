@@ -40,10 +40,10 @@ jobs:
         gcloud config set project $PROJECT_ID
     - name: re tag the image 
       run: |
-        docker tag lukegallianocordova/liatrio-interview us-docker.pkg.dev/$PROJECT_ID/lukegallianocordova/liatrio-interview:$GITHUB_SHA
+        docker tag lukegallianocordova/liatrio-interview us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA
     - name: Push to gcloud artifacts
       run: |
-        docker push us-docker.pkg.dev/$PROJECT_ID/lukegallianocordova/liatrio-interview:$GITHUB_SHA
+        docker push us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA
 #    - name: build 
 #      run: |
 #        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
