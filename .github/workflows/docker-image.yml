@@ -37,7 +37,7 @@ jobs:
         version: '>= 363.0.0'
     - name: gcloud setup
       run: | 
-        gcloud config set project $PROJECT_ID
+        gcloud config set project $PROJECT_ID && gcloud auth configure-docker us-docker.pkg.dev
     - name: re tag the image 
       run: |
         docker tag lukegallianocordova/liatrio-interview us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA
