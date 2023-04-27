@@ -8,8 +8,7 @@ on:
 
 env: 
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-  PROJECT_ID: ${{secrets.PROJECT_ID}}
-  RUN_REGION: us-west4-b
+  PROJECT_ID: ${{secrets.RUN_PROJECT}}
   SERVICE_NAME: deploy-service
   
 jobs:
@@ -37,15 +36,18 @@ jobs:
         version: '>= 363.0.0'
     - name: gcloud setup
       run: | 
-        gcloud config set project $PROJECT_ID
-    - name: build 
+        gcloud config set project $PROJECT_ID && gcloud auth configure-docker us-docker.pkg.dev
+    - name: re tag the image 
       run: |
-        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+        docker tag lukegallianocordova/liatrio-interview us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA
+    - name: Push to gcloud artifacts
+      run: |
+        docker push us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA
+#    - name: build 
+#      run: |
+#        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
     - name: deploy
       run: |
-        gcloud run deploy $SERVICE_NAME \
-          --region $RUN_REGION \
-          --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
-          --platform managed
+        gcloud run deploy $SERVICE_NAME --image=us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA --platform=managed --region="us-west4"
         
       
