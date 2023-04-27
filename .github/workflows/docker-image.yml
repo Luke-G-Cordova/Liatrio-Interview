@@ -37,7 +37,7 @@ jobs:
         version: '>= 363.0.0'
     - name: gcloud setup
       run: | 
-        gcloud config set project $PROJECT_ID
+        gcloud config set project "${PROJECT_ID}"
     - name: build 
       run: |
         gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
