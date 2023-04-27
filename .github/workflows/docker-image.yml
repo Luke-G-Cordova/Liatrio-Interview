@@ -38,11 +38,14 @@ jobs:
     - name: gcloud setup
       run: | 
         gcloud config set project $PROJECT_ID
-    - name: build 
+    - name: Push to gcloud artifacts
       run: |
-        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+        docker push us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/$SERVICE_NAME:$GITHUB_SHA
+#    - name: build 
+#      run: |
+#        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
     - name: deploy
       run: |
-        gcloud run deploy $SERVICE_NAME --region $RUN_REGION --image=gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA --platform managed
+        gcloud run deploy $SERVICE_NAME --region $RUN_REGION --image=us-docker.pkg.dev/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA --platform managed
         
       
