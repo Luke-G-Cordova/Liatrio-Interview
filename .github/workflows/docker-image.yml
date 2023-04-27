@@ -48,6 +48,6 @@ jobs:
 #        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
     - name: deploy
       run: |
-        gcloud run deploy $SERVICE_NAME --image=us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA --platform=managed --region="us-west4-b"
+        gcloud run deploy $SERVICE_NAME --image=us-docker.pkg.dev/$PROJECT_ID/us.gcr.io/liatrio-interview:$GITHUB_SHA --platform=managed --region="us-west4"
         
       
