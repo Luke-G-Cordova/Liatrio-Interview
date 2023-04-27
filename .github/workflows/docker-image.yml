@@ -6,17 +6,46 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env: 
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+  PROJECT_ID: ${{secrets.PROJECT_ID}}
+  RUN_REGION: us-west4-b
+  SERVICE_NAME: deploy-service
+  
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
+    - name: Login to docker
+      run: docker login -u "lukegallianocordova" -p "${DOCKER_PASSWORD}"
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview:github-action && docker run -p 80:80 -d lukegallianocordova/liatrio-interview:github-action
-    - name: run tests
+      run: docker build . --file Dockerfile --tag lukegallianocordova/liatrio-interview
+    - name: Run the Docker image
+      run: docker run -p 80:80 -d lukegallianocordova/liatrio-interview
+    - name: Test the Docker Image
       uses: liatrio/github-actions/apprentice-action@master
-    - name: Push to Docker
-      run: docker push lukegallianocordova/liatrio-interview:github-action
+    - name: Push to Docker Hub
+      run: docker push lukegallianocordova/liatrio-interview
+    - id: auth
+      uses: google-github-actions/auth@v1
+      with: 
+        credentials_json: "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: '>= 363.0.0'
+    - name: gcloud setup
+      run: | 
+        gcloud config set project $PROJECT_ID
+    - name: build 
+      run: |
+        gcloud builds submit -t gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA
+    - name: deploy
+      run: |
+        gcloud run deploy $SERVICE_NAME \
+          --region $RUN_REGION \
+          --image gcr.io/$PROJECT_ID/$SERVICE_NAME:$GITHUB_SHA \
+          --platform managed
+        
+      
