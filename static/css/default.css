@@ -1,0 +1,11 @@
+:root {
+  --primary-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --background-color: #022538;
+  --foreground-color: #49ba19;
+}
+
+body {
+  font-family: var(--primary-font);
+  font-size: 16px;
+  line-height: 1.5;
+}

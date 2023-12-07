@@ -5,6 +5,8 @@ import { default as endpoints } from './api/endpoints/index.js';
 
 const app = express();
 
+app.use('/static', express.static('static'));
+
 endpoints.forEach((endpoint) => {
   switch (endpoint.method) {
     case 'GET':
@@ -20,5 +22,5 @@ endpoints.forEach((endpoint) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`Listening on port ${process.env.SERVER_PORT}`);
+  console.log(`Listening on port ${process.env.PORT}`);
 });
